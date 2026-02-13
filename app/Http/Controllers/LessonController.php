@@ -11,8 +11,15 @@ class LessonController extends Controller
     public function index()
     {
         $lessons = Lesson::query()
-            ->with('teacher')
             ->where('is_active', true)
+            ->with(['lessonSlots' => function ($q) {
+                $q->where('is_cancelled', false)
+                  ->where('starts_at', '>=', now())
+                  ->withCount([
+                      'bookings as confirmed_bookings_count' => fn($qq) => $qq->where('status', 'confirmed')
+                  ])
+                  ->orderBy('starts_at');
+            }])
             ->orderBy('title')
             ->paginate(10);
 
@@ -21,9 +28,14 @@ class LessonController extends Controller
 
     public function show(Lesson $lesson)
     {
-        $lesson->load(['teacher', 'slots' => function ($q) {
+        abort_unless($lesson->is_active, 404);
+
+        $lesson->load(['lessonSlots' => function ($q) {
             $q->where('is_cancelled', false)
               ->where('starts_at', '>=', now())
+              ->withCount([
+                  'bookings as confirmed_bookings_count' => fn($qq) => $qq->where('status', 'confirmed')
+              ])
               ->orderBy('starts_at');
         }]);
 

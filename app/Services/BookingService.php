@@ -41,7 +41,7 @@ class BookingService
                 ]);
             }
 
-            $capacity = (int) ($slot->max_students ?? $slot->lesson->default_max_students);
+            $capacity = (int) ($slot->max_students ?? 1);
 
             $booked = Booking::query()
                 ->where('lesson_slot_id', $slot->id)

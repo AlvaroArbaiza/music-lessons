@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBookingRequest;
+use App\Models\Booking;
+use App\Services\BookingService;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -16,14 +19,14 @@ class BookingController extends Controller
     {
         $bookings = $request->user()
             ->bookings()
-            ->with(['slot.lesson.teacher'])
+            ->with(['lessonSlot.lesson'])
             ->latest()
             ->paginate(10);
 
         return view('bookings.index', compact('bookings'));
     }
 
-    /*public function store(StoreBookingRequest $request, BookingService $service)
+    public function store(StoreBookingRequest $request, BookingService $service)
     {
         $service->create(
             $request->user(),
@@ -32,13 +35,13 @@ class BookingController extends Controller
         );
 
         return back()->with('status', 'Prenotazione creata!');
-    }*/
+    }
 
-    /*public function destroy(Booking $booking)
+    public function destroy(Booking $booking)
     {
         $this->authorize('delete', $booking);
         $booking->update(['status' => 'cancelled']);
 
         return back()->with('status', 'Prenotazione annullata.');
-    }*/
+    }
 }
