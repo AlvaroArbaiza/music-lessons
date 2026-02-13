@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -29,15 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-//
-//Route::get('/', fn () => redirect()->route('lessons.index'));
-//
-//Route::get('/lessons', [LessonController::class, 'index'])->name('lessons.index');
-//Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
-//
-//Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
-//Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-//Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
-//
+
+Route::get('/', fn () => redirect()->route('lessons.index'));
+
+Route::get('/lessons', [LessonController::class, 'index'])->name('lessons.index');
+Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
+
+Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+
 
 require __DIR__.'/auth.php';
