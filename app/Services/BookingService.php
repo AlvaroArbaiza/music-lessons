@@ -29,7 +29,7 @@ class BookingService
             $conflict = Booking::query()
                 ->where('user_id', $user->id)
                 ->where('status', 'confirmed')
-                ->whereHas('slot', function ($q) use ($slot) {
+                ->whereHas('lessonSlot', function ($q) use ($slot) {
                     $q->where('starts_at', '<', $slot->ends_at)
                       ->where('ends_at', '>', $slot->starts_at);
                 })

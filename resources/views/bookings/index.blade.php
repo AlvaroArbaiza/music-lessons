@@ -38,12 +38,13 @@
                     <div class="space-y-4">
                         @foreach ($bookings as $booking)
                             @php
-                                $slot = $booking->slot;
+                                $slot = $booking->lessonSlot;
                                 $lesson = $slot->lesson;
                             @endphp
 
-                            <div class="rounded-xl p-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 transition hover:shadow-md"
-                                 style="border: 1px solid var(--border); background: var(--bg-card);">
+                            <div class="rounded-xl p-5 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 transition hover:shadow-md"
+                                 style="border: 1px solid var(--border); background: var(--bg-card);"
+                                 x-data="{ editingNote: false }">
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center gap-2 flex-wrap mb-2">
                                         <a href="{{ route('lessons.show', $lesson) }}"
@@ -78,14 +79,52 @@
                                         <span class="font-medium">{{ $slot->ends_at->format('H:i') }}</span>
                                     </div>
 
-                                    @if ($booking->note)
-                                        <div class="mt-3 text-sm rounded-lg p-2.5" style="background: #f8fafc; color: var(--text-secondary);">
-                                            <span class="font-medium" style="color: var(--text-primary);">Nota:</span> {{ $booking->note }}
-                                        </div>
-                                    @endif
+                                    {{-- Visualizza nota esistente --}}
+                                    <div x-show="!editingNote" class="mt-3">
+                                        @if ($booking->note)
+                                            <div class="text-sm rounded-lg p-2.5" style="background: #f8fafc; color: var(--text-secondary);">
+                                                <span class="font-medium" style="color: var(--text-primary);">Nota:</span> {{ $booking->note }}
+                                            </div>
+                                        @else
+                                            <p class="text-sm italic" style="color: var(--text-secondary);">Nessuna nota</p>
+                                        @endif
+                                    </div>
+
+                                    {{-- Form modifica nota --}}
+                                    <div x-show="editingNote" x-cloak class="mt-3">
+                                        <form method="POST" action="{{ route('bookings.update', $booking) }}" class="space-y-2">
+                                            @csrf
+                                            @method('PATCH')
+                                            <div>
+                                                <label for="note_{{ $booking->id }}" class="block text-sm font-medium mb-1" style="color: var(--text-primary);">Modifica nota</label>
+                                                <textarea
+                                                    id="note_{{ $booking->id }}"
+                                                    name="note"
+                                                    rows="2"
+                                                    maxlength="500"
+                                                    class="w-full rounded-lg text-sm border-gray-300 focus:border-[#16697a] focus:ring-[#16697a]"
+                                                    placeholder="Aggiungi una nota (opzionale)">{{ old('note', $booking->note) }}</textarea>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button type="submit"
+                                                        class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium text-white transition"
+                                                        style="background: linear-gradient(135deg, #16697a, #124f5d);">
+                                                    Salva
+                                                </button>
+                                                <button type="button"
+                                                        @click="editingNote = false"
+                                                        class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium transition"
+                                                        style="border: 1px solid var(--border); color: var(--text-secondary);"
+                                                        onmouseover="this.style.backgroundColor='#f8f9fb'"
+                                                        onmouseout="this.style.backgroundColor='transparent'">
+                                                    Annulla
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
 
-                                <div class="flex items-center gap-2">
+                                <div class="flex flex-wrap items-center gap-2 shrink-0">
                                     <a href="{{ route('lessons.show', $lesson) }}"
                                        class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition hover:bg-gray-50"
                                        style="border: 1px solid var(--border); color: var(--text-primary);">
@@ -93,6 +132,15 @@
                                     </a>
 
                                     @if ($booking->status !== 'cancelled')
+                                        <button type="button"
+                                                @click="editingNote = !editingNote"
+                                                class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition"
+                                                style="border: 1px solid var(--border); color: var(--text-primary);"
+                                                onmouseover="this.style.backgroundColor='#f8f9fb'"
+                                                onmouseout="this.style.backgroundColor='transparent'">
+                                            <span x-text="editingNote ? 'Chiudi' : 'Modifica nota'"></span>
+                                        </button>
+
                                         <form method="POST" action="{{ route('bookings.destroy', $booking) }}">
                                             @csrf
                                             @method('DELETE')

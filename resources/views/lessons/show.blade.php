@@ -49,10 +49,10 @@
                 <div class="lg:col-span-1">
                     <div class="card p-6">
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="inline-flex items-center rounded-lg px-2.5 py-1.5 text-xs font-semibold" style="background: #dbeafe; color: #1e40af;">
+                            <span class="inline-flex items-center rounded-lg px-2.5 py-1.5 text-xs font-semibold" style="background: #d8f0f5; color: #16697a;">
                                 🎸 {{ strtoupper($lesson->instrument) }}
                             </span>
-                            <span class="inline-flex items-center rounded-lg px-2.5 py-1.5 text-xs font-semibold" style="background: #f3e8ff; color: #6b21a8;">
+                            <span class="inline-flex items-center rounded-lg px-2.5 py-1.5 text-xs font-semibold" style="background: #e5f5f7; color: #489fb5;">
                                 📊 {{ $lesson->difficulty_level }}
                             </span>
                             <span class="badge-info inline-flex items-center rounded-lg px-2.5 py-1.5 text-xs font-semibold">
@@ -77,18 +77,18 @@
                         <div class="flex items-center justify-between mb-5">
                             <h3 class="text-lg font-semibold" style="color: var(--text-primary);">Slot disponibili</h3>
                             <span class="badge-info rounded-full px-3 py-1 text-xs font-semibold">
-                                {{ $lesson->slots->count() }} slot
+                                {{ $lesson->lessonSlots->count() }} slot
                             </span>
                         </div>
 
-                        @if ($lesson->slots->count() === 0)
+                        @if ($lesson->lessonSlots->count() === 0)
                             <div class="rounded-lg border-2 border-dashed p-12 text-center" style="border-color: var(--border);">
                                 <div class="text-5xl mb-3">📅</div>
                                 <p class="text-lg font-medium" style="color: var(--text-primary);">Nessuno slot disponibile</p>
                             </div>
                         @else
                             <div class="space-y-3">
-                                @foreach ($lesson->slots as $slot)
+                                @foreach ($lesson->lessonSlots as $slot)
                                     @php
                                         $capacity = (int) $slot->max_students;
                                         $booked = (int) ($slot->confirmed_bookings_count ?? 0);

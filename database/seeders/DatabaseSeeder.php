@@ -12,13 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
+        // Prima crea le lezioni e gli slot
         $this->call(MusicSeeder::class);
+
+        // Poi crea gli utenti con le loro prenotazioni
+        $this->call(UserSeeder::class);
     }
 }

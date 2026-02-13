@@ -16,21 +16,22 @@
 
         <style>
             :root {
-                --primary: #6366f1;
-                --primary-dark: #4f46e5;
-                --primary-light: #a5b4fc;
-                --bg-main: #f8f9fb;
+                --primary: #16697a;
+                --primary-dark: #124f5d;
+                --primary-light: #489fb5;
+                --bg-main: #ede7e3;
                 --bg-card: #ffffff;
-                --text-primary: #1e293b;
-                --text-secondary: #64748b;
-                --border: #e2e8f0;
+                --text-primary: #2c3e50;
+                --text-secondary: #5a6c7d;
+                --border: #d4cdc5;
                 --accent-success: #10b981;
                 --accent-danger: #f43f5e;
-                --accent-warning: #f59e0b;
+                --accent-warning: #ffa62b;
+                --accent-cyan: #82c0cc;
             }
 
             body {
-                background: linear-gradient(160deg, #f8f9fb 0%, #f0f4ff 100%);
+                background: linear-gradient(160deg, #ede7e3 0%, #f5f1ed 100%);
                 color: var(--text-primary);
             }
 
@@ -48,7 +49,7 @@
 
             .btn-primary:hover {
                 transform: translateY(-1px);
-                box-shadow: 0 8px 20px -8px rgba(99, 102, 241, 0.4);
+                box-shadow: 0 8px 20px -8px rgba(22, 105, 122, 0.4);
             }
 
             .card {
@@ -69,8 +70,8 @@
             }
 
             .badge-info {
-                background: #e0e7ff;
-                color: #3730a3;
+                background: #d8f0f5;
+                color: #16697a;
             }
 
             .badge-warning {

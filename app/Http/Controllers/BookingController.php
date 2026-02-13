@@ -37,6 +37,19 @@ class BookingController extends Controller
         return back()->with('status', 'Prenotazione creata!');
     }
 
+    public function update(Request $request, Booking $booking)
+    {
+        $this->authorize('update', $booking);
+
+        $validated = $request->validate([
+            'note' => 'nullable|string|max:500',
+        ]);
+
+        $booking->update($validated);
+
+        return back()->with('status', 'Prenotazione aggiornata!');
+    }
+
     public function destroy(Booking $booking)
     {
         $this->authorize('delete', $booking);

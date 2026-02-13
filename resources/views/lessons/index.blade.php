@@ -52,10 +52,10 @@
                                 </div>
 
                                 <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-medium" style="background: #dbeafe; color: #1e40af;">
+                                    <span class="inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-medium" style="background: #d8f0f5; color: #16697a;">
                                         📊 {{ $lesson->difficulty_level }}
                                     </span>
-                                    <span class="inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-medium" style="background: #f3e8ff; color: #6b21a8;">
+                                    <span class="inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-medium" style="background: #fff4e6; color: #c77d1a;">
                                         ⏱️ {{ $lesson->duration_minutes }} min
                                     </span>
                                 </div>
