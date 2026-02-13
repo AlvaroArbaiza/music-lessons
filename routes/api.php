@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthTokenController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\LessonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->group(function () {
+
+    Route::get('/lessons', [LessonController::class, 'index']);
+    Route::get('/lessons/{lesson}', [LessonController::class, 'show']);
+
+    Route::post('/auth/token', [AuthTokenController::class, 'issue']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/bookings', [BookingController::class, 'index']);
+        Route::post('/bookings', [BookingController::class, 'store']);
+    });
 });
