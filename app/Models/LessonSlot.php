@@ -19,6 +19,12 @@ class LessonSlot extends Model
         'is_cancelled',
     ];
 
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
+        'is_cancelled' => 'boolean',
+    ];
+
     public function lesson(): BelongsTo
     {
         return $this->belongsTo(Lesson::class);
@@ -27,5 +33,10 @@ class LessonSlot extends Model
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function capacity(): int
+    {
+        return (int) ($this->max_students);
     }
 }

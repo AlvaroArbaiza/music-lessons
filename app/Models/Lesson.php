@@ -22,7 +22,8 @@ class Lesson extends Model
     ];
 
     protected $casts = [
-        'difficulty_level' => LessonDifficultyLevel::class
+        'difficulty_level' => LessonDifficultyLevel::class,
+        'is_active' => 'boolean',
     ];
 
     public function lessonSlots(): HasMany
