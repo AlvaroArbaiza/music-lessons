@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
+<nav x-data="{ open: false }" class="relative z-40 overflow-visible" style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -113,3 +113,4 @@
         </div>
     </div>
 </nav>
+

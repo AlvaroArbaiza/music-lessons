@@ -1,4 +1,8 @@
 <x-guest-layout>
+    <div class="mb-4">
+        <h1 class="text-2xl font-semibold" style="color: var(--text-primary);">Registrati</h1>
+    </div>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 

@@ -1,4 +1,8 @@
 <x-guest-layout>
+    <div class="mb-4">
+        <h1 class="text-2xl font-semibold" style="color: var(--text-primary);">Accedi</h1>
+    </div>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
