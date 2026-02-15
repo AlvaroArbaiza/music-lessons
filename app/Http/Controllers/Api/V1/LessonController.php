@@ -13,17 +13,16 @@ class LessonController extends Controller
     public function index()
     {
         $lessons = Lesson::query()
-            ->with('teacher')
             ->where('is_active', true)
             ->orderBy('title')
             ->paginate(10);
 
-        return LessonResource::collection($lessons);
+        return LessonResource::collection($lessons->items());
     }
 
     public function show(Lesson $lesson)
     {
-        $lesson->load(['teacher', 'slots' => function ($q) {
+        $lesson->load(['lessonSlots' => function ($q) {
             $q->where('is_cancelled', false)
               ->where('starts_at', '>=', now())
               ->orderBy('starts_at');

@@ -22,9 +22,9 @@ class LessonDetailResource extends JsonResource
             'duration_minutes' => $this->duration_minutes,
             'description' => $this->description,
             'teacher_name' => $this->teacher_name,
-            'lessonSlots' => $this->slots->map(fn($s) => [
+            'lessonSlots' => $this->lessonSlots->map(fn($s) => [
                 'id' => $s->id,
-                'starts_at' => $s->starts_at?->toISOString(),
+                'starts_at' => $s->starts_at?->toISOString(), // format('Y-m-d H:i:s')
                 'ends_at' => $s->ends_at?->toISOString(),
                 'max_students' => $s->max_students,
             ])->values(),

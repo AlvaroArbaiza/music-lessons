@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthTokenController;
 use App\Http\Controllers\Api\V1\BookingController;
-use App\Http\Controllers\LessonController;
+use App\Http\Controllers\Api\V1\LessonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
