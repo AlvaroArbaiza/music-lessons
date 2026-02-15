@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthTokenController;
-use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\LessonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +26,5 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/bookings', [BookingController::class, 'index']);
-        Route::post('/bookings', [BookingController::class, 'store']);
     });
 });

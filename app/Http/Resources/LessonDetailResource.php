@@ -21,12 +21,8 @@ class LessonDetailResource extends JsonResource
             'difficulty_level' => $this->difficulty_level,
             'duration_minutes' => $this->duration_minutes,
             'description' => $this->description,
-            'teacher' => [
-                'id' => $this->teacher->id,
-                'name' => $this->teacher->name,
-                'bio' => $this->teacher->bio,
-            ],
-            'slots' => $this->slots->map(fn($s) => [
+            'teacher_name' => $this->teacher_name,
+            'lessonSlots' => $this->slots->map(fn($s) => [
                 'id' => $s->id,
                 'starts_at' => $s->starts_at?->toISOString(),
                 'ends_at' => $s->ends_at?->toISOString(),
