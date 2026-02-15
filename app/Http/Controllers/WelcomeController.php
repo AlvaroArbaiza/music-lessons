@@ -8,6 +8,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
+        // 6 slot futuri con lezione associata + conteggio prenotazioni confermate, ordinati per data
         $upcomingSlots = LessonSlot::with('lesson')
             ->where('starts_at', '>', now())
             ->withCount(['bookings as confirmed_bookings_count' => function ($query) {

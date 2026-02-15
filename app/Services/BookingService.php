@@ -12,11 +12,13 @@ class BookingService
 {
     public function create(User $user, int $slotId, ?string $note = null): Booking
     {
+        // Transazione: garantisce coerenza e rollback in caso di errore
         return DB::transaction(function () use ($user, $slotId, $note) {
 
             /** @var LessonSlot $slot */
             $slot = LessonSlot::query()
                 ->with('lesson')
+                // Blocca la riga dello slot fino a fine transazione (race condition)
                 ->lockForUpdate()
                 ->findOrFail($slotId);
 
@@ -26,6 +28,7 @@ class BookingService
                 ]);
             }
 
+            // Query per trovare una prenotazione che possa creare conflitto di orario
             $conflict = Booking::query()
                 ->where('user_id', $user->id)
                 ->where('status', 'confirmed')
@@ -43,6 +46,7 @@ class BookingService
 
             $capacity = (int) ($slot->max_students ?? 1);
 
+            // Query per count di prenotazioni confermate
             $booked = Booking::query()
                 ->where('lesson_slot_id', $slot->id)
                 ->where('status', 'confirmed')

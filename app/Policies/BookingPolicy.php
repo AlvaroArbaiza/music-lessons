@@ -6,6 +6,11 @@ use Illuminate\Auth\Access\Response;
 use App\Models\Booking;
 use App\Models\User;
 
+/**
+ * Policy di autorizzazione per Booking:
+ * consente a qualunque utente autenticato di elencare/creare prenotazioni,
+ * ma permette di vedere/modificare/eliminare solo le prenotazioni di cui è proprietario (booking.user_id = user.id).
+ */
 class BookingPolicy
 {
     /**

@@ -17,6 +17,7 @@ class BookingController extends Controller
 
     public function index(Request $request)
     {
+        // Paginazione ordinata(dal più recente) con caricamento relazioni
         $bookings = $request->user()
             ->bookings()
             ->with(['lessonSlot.lesson'])
@@ -39,6 +40,7 @@ class BookingController extends Controller
 
     public function update(Request $request, Booking $booking)
     {
+        // Autorizzazione basata su BookingPolicy per lo user
         $this->authorize('update', $booking);
 
         $validated = $request->validate([

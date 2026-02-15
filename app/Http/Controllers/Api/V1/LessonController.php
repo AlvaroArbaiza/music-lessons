@@ -12,6 +12,7 @@ class LessonController extends Controller
 {
     public function index()
     {
+        // Paginazione ordinata(dal titolo) con is_active a true
         $lessons = Lesson::query()
             ->where('is_active', true)
             ->orderBy('title')
@@ -22,6 +23,7 @@ class LessonController extends Controller
 
     public function show(Lesson $lesson)
     {
+        // Dettaglio lezione con slots non cancellate e future
         $lesson->load(['lessonSlots' => function ($q) {
             $q->where('is_cancelled', false)
               ->where('starts_at', '>=', now())

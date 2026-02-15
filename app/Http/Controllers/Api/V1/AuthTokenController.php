@@ -10,12 +10,16 @@ use Illuminate\Validation\ValidationException;
 
 class AuthTokenController extends Controller
 {
+    /**
+     * Autenticazione user con credenziali
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function issue(Request $request)
     {
         $data = $request->validate([
             'email' => ['required','email'],
             'password' => ['required','string'],
-            'device_name' => ['nullable','string','max:100'],
         ]);
 
         $user = User::where('email', $data['email'])->first();
@@ -26,7 +30,7 @@ class AuthTokenController extends Controller
             ]);
         }
 
-        $token = $user->createToken($data['device_name'] ?? 'api-token')->plainTextToken;
+        $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json(['token' => $token]);
     }

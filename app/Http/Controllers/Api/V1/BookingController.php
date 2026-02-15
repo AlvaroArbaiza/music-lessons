@@ -10,6 +10,7 @@ class BookingController extends Controller
 {
     public function index(Request $request)
     {
+        // Paginazione ordinata(dal più recente) con caricamento relazioni
         $bookings = $request->user()
             ->bookings()
             ->with(['lessonSlot.lesson'])

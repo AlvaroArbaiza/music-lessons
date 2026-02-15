@@ -10,6 +10,7 @@ class LessonController extends Controller
 {
     public function index()
     {
+        // Lezioni attive con slot futuri non cancellati + conteggio prenotazioni confermate, ordinato e paginato
         $lessons = Lesson::query()
             ->where('is_active', true)
             ->with(['lessonSlots' => function ($q) {
@@ -28,8 +29,10 @@ class LessonController extends Controller
 
     public function show(Lesson $lesson)
     {
+        // Se non attiva, 404
         abort_unless($lesson->is_active, 404);
 
+        // Slot futuri non cancellati + conteggio prenotazioni confermate, ordinati per starts_at
         $lesson->load(['lessonSlots' => function ($q) {
             $q->where('is_cancelled', false)
               ->where('starts_at', '>=', now())
